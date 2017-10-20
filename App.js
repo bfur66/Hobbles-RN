@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Platform } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import { Provider } from 'react-redux';
+import Expo from 'expo';
 
 import store from './store';
 import AuthScreen from './screens/AuthScreen';
@@ -10,6 +11,8 @@ import MapScreen from './screens/MapScreen';
 import DeckScreen from './screens/DeckScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import ReviewScreen from './screens/ReviewScreen';
+import FacebookLoginScreen from './screens/FacebookLoginScreen';
+import MobileLoginScreen from './screens/MobileLoginScreen';
 
 export default class App extends React.Component {
   
@@ -18,6 +21,8 @@ export default class App extends React.Component {
       {
         welcome: { screen: WelcomeScreen },
         auth: { screen: AuthScreen },
+        facebookLogin: { screen: FacebookLoginScreen },
+        mobileLogin: { screen: MobileLoginScreen },
         main: {
           screen: TabNavigator(
             {
@@ -33,6 +38,11 @@ export default class App extends React.Component {
             },
             {
               tabBarPosition: 'bottom',
+              lazy: true,
+              navigationOptions: {
+                tabBarVisible: true
+              },
+
               tabBarOptions: {
                 labelStyle : { fontSize: 12 }
               }
@@ -62,6 +72,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    marginTop: Platform.OS === 'android' ? Expo.Constants.statusBarHeight : undefined
+    alignItems: 'center',
+    justifyContent: 'center'
   },
 });
