@@ -1,8 +1,20 @@
+import { MapView, Constants, Location, Permissions } from 'expo';
+
 import { SET_INITIAL_USER_LOCATION } from './types';
 
-export const setInitialUserLocation = (dispatch) => {
+export const setInitialUserLocation = () => async dispatch => {
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
 
-    var coords;
+    if (status !== 'granted') {
+        this.setState({ errorMessage: 'Permission to access location was denied', }); // change to dispatch an action?
+    }
 
-    dispatch({ type: SET_INITIAL_USER_LOCATION, payload: coords });
+    let location = await Location.getCurrentPositionAsync({});
+    const region = { 
+        longitude: location.coords.longitude,
+        latitude: location.coords.latitude,
+        longitudeDelta: 0.04,
+        latitudeDelta: 0.09
+    };
+    dispatch({ type: SET_INITIAL_USER_LOCATION, payload: region });
 }

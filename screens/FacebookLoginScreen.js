@@ -7,6 +7,8 @@ class FacebookLoginScreen extends Component {
 
     componentDidMount() {
         this.props.facebookLogin();
+        this.setInitialLocation();
+        console.log("<inside FBLogin>");        
     }
 
     componentWillReceiveProps(nextProps) {
@@ -15,8 +17,15 @@ class FacebookLoginScreen extends Component {
 
     onAuthComplete(props) {
         if (props.token) {
+            // console.log('<----- inside onAuthComplete calling setInitialUserLocation')
+            // this.props.setInitialUserLocation();
+            // console.log('<----- done setInitialUserLocation')
             this.props.navigation.navigate('map');
         }
+    }
+
+    setInitialLocation() {
+        this.props.setInitialUserLocation();
     }
 
     render() {
@@ -26,8 +35,8 @@ class FacebookLoginScreen extends Component {
     }
 }
 
-function mapStateToProps({ auth }) {
-    return { token: auth.token };
+function mapStateToProps({ auth, user }) {
+    return { token: auth.token, location: user.location };
 }
 
 export default connect(mapStateToProps, actions)(FacebookLoginScreen);

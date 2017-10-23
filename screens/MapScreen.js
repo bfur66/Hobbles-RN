@@ -6,56 +6,44 @@ import { Button } from 'react-native-elements';
 
 import * as actions from '../actions';
 
+
+/*
+    ------- TODO -------
+    - there are (potentially) issues with this component lifecycle
+      as there are a few unexplained renders showing up in the 
+      logs. Will look into this
+      
+    - add a slider by the button to allow the user to specify the 
+      radius in which they wish to show hobbles in 
+      
+*/
 class MapScreen extends Component {
 
+    constructor(props) {
+        super(props);
+    }
+
     state = {
-        region: {
-            longitude: null,
-            latitude: null,
-            longitudeDelta: 0.04,
-            latitudeDelta: 0.09
-        }
+        region: {}
     }
-
-    componentWillMount = async () => {
-        let { location } = await this.getLocationAsync();
-        console.log(location);
-
-        const newState = {
-            region: {
-                longitude: this.state.location.longitude,
-                latitude: this.state.location.latitude,
-                longitudeDelta: 0.04,
-                latitudeDelta: 0.09
-            }
-        }
-    }
-
-    getLocationAsync = async () => {
-        let { status } = await Permissions.askAsync(Permissions.LOCATION);
-
-        if (status !== 'granted') {
-            this.setState({ errorMessage: 'Permission to access location was denied', });
-        }
-
-        let location = await Location.getCurrentPositionAsync({});
-        this.setState({ location });
-    };
 
     onRegionChangeComplete = (region) => {
-        console.log(region);
         this.setState({ region });
     }
 
-    onButtonPress = () => {
-        console.log(JSON.stringify(this.state.location));
+    onButtonPress = () => {        
+        // this will eventually fire off a redux action to save the current
+        // position in application state to be used again in the deck view
+        // where the user will swipe through all nearby hobbles
+
+        console.log(this.state.region);
     }
 
     render() {
         return (
             <View style={{ flex:1 }}>
                 <MapView 
-                    region={this.state.region}
+                    initialRegion={this.props.location}
                     style={{ flex: 1 }} 
                     onRegionChangeComplete={this.onRegionChangeComplete}
                 />
@@ -83,4 +71,8 @@ const styles = {
     }
 }
 
-export default MapScreen;
+function mapStateToProps({ user }) {
+    return { location: user.location }
+}
+
+export default connect(mapStateToProps, actions)(MapScreen);
