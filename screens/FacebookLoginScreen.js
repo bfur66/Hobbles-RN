@@ -8,7 +8,7 @@ class FacebookLoginScreen extends Component {
     componentDidMount() {
         this.props.facebookLogin();
         this.setInitialLocation();
-        console.log("<inside FBLogin>");        
+        //console.log("<inside FBLogin>");        
     }
 
     componentWillReceiveProps(nextProps) {

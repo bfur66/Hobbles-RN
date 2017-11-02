@@ -13,8 +13,11 @@ import SettingsScreen from './screens/SettingsScreen';
 import ReviewScreen from './screens/ReviewScreen';
 import FacebookLoginScreen from './screens/FacebookLoginScreen';
 import MobileLoginScreen from './screens/MobileLoginScreen';
+import CreateHobbleScreen from './screens/CreateHobbleScreen';
 
 export default class App extends React.Component {
+
+  // figure out where to put the CreateHobbleScreen navigation options in this mess 
   
   render() {
     const MainNavigator = TabNavigator(
@@ -27,13 +30,21 @@ export default class App extends React.Component {
           screen: TabNavigator(
             {
               map: { screen: MapScreen },
-              deck: { screen: DeckScreen },
+              hobbles: { screen: DeckScreen },
+              create: { 
+                screen: StackNavigator(
+                  {
+                    create: { screen: CreateHobbleScreen }
+                  }
+                )
+              },
               review: {
                 screen: StackNavigator(
                   {
                     review: { screen: ReviewScreen },
                     settings: { screen: SettingsScreen }
-                  })
+                  }
+                )
               }
             },
             {
@@ -44,7 +55,11 @@ export default class App extends React.Component {
               },
 
               tabBarOptions: {
-                labelStyle : { fontSize: 12 }
+                activeTintColor: 'white',
+                labelStyle: { fontSize: 12 },
+                style: {
+                  backgroundColor: '#158fc6'
+                }
               }
             }
           )

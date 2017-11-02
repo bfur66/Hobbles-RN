@@ -3,6 +3,10 @@ import { View, Text } from 'react-native';
 
 class DeckScreen extends Component {
 
+
+    // todo--
+    // IMPLEMENT FUNCTIONALITY IN THIS SCREEN 
+
     render() {
         return (
             <View>

@@ -10,11 +10,14 @@ export const setInitialUserLocation = () => async dispatch => {
     }
 
     let location = await Location.getCurrentPositionAsync({});
+    const { latitude, longitude } = location.coords;
+    
     const region = { 
-        longitude: location.coords.longitude,
-        latitude: location.coords.latitude,
+        longitude: longitude,
+        latitude: latitude,
         longitudeDelta: 0.04,
         latitudeDelta: 0.09
     };
+    
     dispatch({ type: SET_INITIAL_USER_LOCATION, payload: region });
 }

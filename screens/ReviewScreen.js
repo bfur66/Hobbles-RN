@@ -5,7 +5,7 @@ import { Button } from 'react-native-elements';
 class ReviewScreen extends Component {
 
     static navigationOptions = ({ navigation }) => ({
-        title: 'Review Jobs',
+        title: 'My Hobbles',
         headerRight: (
             <Button
                 title="Settings"

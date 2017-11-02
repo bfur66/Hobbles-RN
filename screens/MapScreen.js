@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ToastAndroid, Platform } from 'react-native';
 import { MapView, Constants, Location, Permissions } from 'expo';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
@@ -35,6 +35,10 @@ class MapScreen extends Component {
         // this will eventually fire off a redux action to save the current
         // position in application state to be used again in the deck view
         // where the user will swipe through all nearby hobbles
+        if (Platform.OS === 'android') {
+            ToastAndroid.show('Location set! Browse the Hobbles section for a job that interests you or post a Hobble you are looking to have completed!',
+                ToastAndroid.LONG);    
+        }
 
         console.log(this.state.region);
     }
@@ -65,7 +69,7 @@ class MapScreen extends Component {
 const styles = {
     buttonContainer: {
         position: 'absolute',
-        bottom: 20,
+        bottom: 30,
         left: 0,
         right: 0
     }
